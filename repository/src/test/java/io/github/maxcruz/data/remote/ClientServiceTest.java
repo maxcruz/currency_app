@@ -1,10 +1,9 @@
 package io.github.maxcruz.data.remote;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class ClientServiceTest {
 
@@ -12,5 +11,11 @@ public class ClientServiceTest {
     public void shouldCreateCurrencyService() {
         assertThat(ClientService.createService(CurrencyService.class,  CurrencyService.URL),
                 instanceOf(CurrencyService.class));
+    }
+
+    @Test
+    public void shouldCreateCountryService() {
+        assertThat(ClientService.createService(CountryService.class, CountryService.URL),
+                instanceOf(CountryService.class));
     }
 }
