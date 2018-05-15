@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.maxcruz.data">
+    package="io.github.maxcruz.repository">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
