@@ -1,5 +1,7 @@
 package io.github.maxcruz.data.remote;
 
+import java.util.concurrent.TimeUnit;
+
 import io.github.maxcruz.data.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -10,6 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Create an implementation of Retrofit to communicate with an service API.
  */
 public class ClientService {
+
+    
 
     /**
      * This class adapts an interface to HTTP calls.
@@ -30,6 +34,9 @@ public class ClientService {
             logger.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addInterceptor(logger);
         }
+
+        httpClientBuilder.connectTimeout(1, TimeUnit.SECONDS);
+        httpClientBuilder.readTimeout(1, TimeUnit.SECONDS);
 
         // Create a Retrofit instance using the provided builder
         Retrofit retrofit = (new Retrofit.Builder())
