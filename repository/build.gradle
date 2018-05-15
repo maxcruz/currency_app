@@ -16,6 +16,9 @@ android {
     }
 
     buildTypes {
+        all {
+            buildConfigField "String", "CURRENCY_KEY", project.property('CURRENCY_KEY')
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -35,6 +38,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.18.3'
+    testImplementation 'org.mockito:mockito-inline:2.18.3'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
