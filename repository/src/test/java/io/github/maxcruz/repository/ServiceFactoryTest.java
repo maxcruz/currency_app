@@ -1,4 +1,4 @@
-package io.github.maxcruz.repository.remote;
+package io.github.maxcruz.repository;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -6,7 +6,8 @@ import org.mockito.verification.VerificationMode;
 
 import java.util.concurrent.TimeUnit;
 
-import io.github.maxcruz.repository.remote.rules.ServiceFactoryRule;
+import io.github.maxcruz.repository.remote.CurrencyService;
+import io.github.maxcruz.repository.rules.ServiceFactoryRule;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;

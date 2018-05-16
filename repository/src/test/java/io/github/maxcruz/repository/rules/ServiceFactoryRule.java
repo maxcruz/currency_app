@@ -1,4 +1,4 @@
-package io.github.maxcruz.repository.remote.rules;
+package io.github.maxcruz.repository.rules;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
