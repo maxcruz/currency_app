@@ -37,32 +37,32 @@ public class ConversionRateTest {
     @Test
     public void createRateAndGetByCode() {
         // Given
-        ConversionRate rate = getSampleRate(1, "COP", "Colombian peso", "USD");
+        ConversionRate rate = getSampleRate(1, "COP", 3000.0);
 
         // When
         conversionRateDao.insertAll(rate);
 
         // Then
         assertEquals(1, conversionRateDao.countAll());
-        assertEquals("Colombian peso", conversionRateDao.getByCode("COP").getName());
+        assertEquals("COP", conversionRateDao.getByCode("COP").getCode());
     }
 
     @Test
     public void createRateAndGetById() {
         // Given
-        ConversionRate rate = getSampleRate(1, "COP", "Colombian peso", "USD");
+        ConversionRate rate = getSampleRate(1, "COP", 3000.0);
 
         // When
         conversionRateDao.insertAll(rate);
 
         // Then
-        assertEquals("Colombian peso", conversionRateDao.getById(1).getName());
+        assertEquals("COP", conversionRateDao.getById(1).getCode());
     }
 
     @Test
     public void deleteRateAndCount() {
         // Given
-        ConversionRate rate = getSampleRate(1, "COP", "Colombian peso", "USD");
+        ConversionRate rate = getSampleRate(1, "COP", 3000.0);
 
         // When
         conversionRateDao.insertAll(rate);
@@ -75,9 +75,9 @@ public class ConversionRateTest {
     @Test
     public void clearRateAndCount() {
         // Given
-        ConversionRate rate1 = getSampleRate(1, "COP", "Colombian peso", "USD");
-        ConversionRate rate2 = getSampleRate(2, "EUR", "Euro", "USD");
-        ConversionRate rate3 = getSampleRate(3, "JPY", "Japan Yen", "USD");
+        ConversionRate rate1 = getSampleRate(1, "COP", 3000.0);
+        ConversionRate rate2 = getSampleRate(2, "EUR", 1.5);
+        ConversionRate rate3 = getSampleRate(3, "JPY", 2.2);
 
         // When
         conversionRateDao.insertAll(rate1);
@@ -90,34 +90,28 @@ public class ConversionRateTest {
     }
 
     @Test
-    public void filterPerBase() {
+    public void getAllEntries() {
         // Given
-        ConversionRate rate1 = getSampleRate(1, "COP", "Colombian peso", "USD");
-        ConversionRate rate2 = getSampleRate(2, "EUR", "Euro", "USD");
-        ConversionRate rate3 = getSampleRate(3, "JPY", "Japan Yen", "USD");
-        ConversionRate rate4 = getSampleRate(4, "CLP", "Chile peso", "EUR");
+        ConversionRate rate1 = getSampleRate(1, "COP", 3000.0);
+        ConversionRate rate2 = getSampleRate(2, "EUR", 1.5);
+        ConversionRate rate3 = getSampleRate(3, "JPY", 2.2);
 
         // When
         conversionRateDao.insertAll(rate1);
         conversionRateDao.insertAll(rate2);
         conversionRateDao.insertAll(rate3);
-        conversionRateDao.insertAll(rate4);
-        List<ConversionRate> rates = conversionRateDao.getAllByBase("USD");
+        List<ConversionRate> rates = conversionRateDao.getAll();
 
         // Then
-        assertEquals(4, conversionRateDao.countAll());
+        assertEquals(3, conversionRateDao.countAll());
         assertEquals(3, rates.size());
-        assertEquals(3, conversionRateDao.countRatesByBase("USD"));
     }
 
-    private ConversionRate getSampleRate(int id, String code, String name, String base) {
+    private ConversionRate getSampleRate(int id, String code, Double rate) {
         ConversionRate conversionRate = new ConversionRate();
         conversionRate.setUid(id);
         conversionRate.setCode(code);
-        conversionRate.setName(name);
-        conversionRate.setBase(base);
-        conversionRate.setFlag("https://restcountries.eu/data/col.svg");
-        conversionRate.setRate(3000.0);
+        conversionRate.setRate(rate);
         return conversionRate;
     }
 

@@ -28,13 +28,6 @@ public class ServiceFactoryTest {
     }
 
     @Test
-    public void shouldCreateCountryService() {
-        assertThat(serviceFactoryRule.getServiceFactory()
-                        .createService(CountryService.class, CountryService.URL),
-                instanceOf(CountryService.class));
-    }
-
-    @Test
     public void shouldSetTimeOut() {
         // Given
         int seconds = 5;

@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+/**
+ * Data base object to save the currency conversion rate
+ */
 @Entity(tableName = "conversion_rate")
 public class ConversionRate {
 
@@ -12,15 +15,6 @@ public class ConversionRate {
 
     @ColumnInfo(name = "code")
     private String code;
-
-    @ColumnInfo(name = "name")
-    private String name;
-
-    @ColumnInfo(name = "base")
-    private String base;
-
-    @ColumnInfo(name = "flag")
-    private String flag;
 
     @ColumnInfo(name = "rate")
     private Double rate;
@@ -51,48 +45,6 @@ public class ConversionRate {
      */
     public void setCode(String code) {
         this.code = code;
-    }
-
-    /**
-     * @return title name in english.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name set a name for the currency.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return URL to the country flag of the currency.
-     */
-    public String getFlag() {
-        return flag;
-    }
-
-    /**
-     * @param flag set an image URL for the currency.
-     */
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    /**
-     * @return code for the currency base for the conversion rate.
-     */
-    public String getBase() {
-        return base;
-    }
-
-    /**
-     * @param base set the baser for the conversion rate.
-     */
-    public void setBase(String base) {
-        this.base = base;
     }
 
     /**
