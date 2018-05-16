@@ -13,12 +13,12 @@ import io.reactivex.Observable;
 /**
  * Repository pattern implementation to access local and remote data
  */
-class CurrencyRepository implements CurrencyData {
+public class CurrencyRepository implements CurrencyData {
 
     private ConversionRateDao conversionRateDao;
     private CurrencyService currencyService;
 
-    CurrencyRepository(ConversionRateDao conversionRateDao, CurrencyService currencyService) {
+    public CurrencyRepository(ConversionRateDao conversionRateDao, CurrencyService currencyService) {
         this.conversionRateDao = conversionRateDao;
         this.currencyService = currencyService;
     }
