@@ -1,7 +1,7 @@
 package io.github.maxcruz.repository.remote;
 
 import io.github.maxcruz.repository.remote.dto.ExchangeRate;
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -20,5 +20,5 @@ public interface CurrencyService {
      * @return Exchange rates if the request if successfully, otherwise an error is returned.
      */
     @GET("live")
-    public Call<ExchangeRate> getExchangeRate(@Query("access_key") String accessKey);
+    Observable<ExchangeRate> getExchangeRate(@Query("access_key") String accessKey);
 }

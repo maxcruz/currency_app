@@ -15,8 +15,7 @@ import io.github.maxcruz.repository.remote.dto.ExchangeRate;
 import io.github.maxcruz.repository.rules.MockWebServerRule;
 import io.github.maxcruz.repository.rules.ServiceFactoryRule;
 import io.github.maxcruz.repository.utils.RestServiceTestHelper;
-import retrofit2.Call;
-import retrofit2.Response;
+import io.reactivex.observers.TestObserver;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -42,15 +41,16 @@ public class CurrencyServiceTest {
         mockWebServerRule.enqueueResponse(body);
 
         // When
-        Call<ExchangeRate> request = currencyService.getExchangeRate(BuildConfig.CURRENCY_KEY);
-        Response<ExchangeRate> response = request.execute();
+        TestObserver<ExchangeRate> observer = currencyService
+                .getExchangeRate(BuildConfig.CURRENCY_KEY).test();
+        ExchangeRate exchangeRate = observer.values().get(0);
 
         // Then
-        assert response.body() != null;
-        assertEquals(200, response.code());
-        assertEquals(true, response.body().isSuccess());
-        assertNotNull(response.body().getSource());
-        assertNotNull(response.body().getQuotes());
+        observer.assertNoErrors();
+        assert exchangeRate != null;
+        assertEquals(true, exchangeRate.isSuccess());
+        assertNotNull(exchangeRate.getSource());
+        assertNotNull(exchangeRate.getQuotes());
     }
 
     @Test
@@ -62,14 +62,15 @@ public class CurrencyServiceTest {
         mockWebServerRule.enqueueResponse(body);
 
         // When
-        Call<ExchangeRate> request = currencyService.getExchangeRate(BuildConfig.CURRENCY_KEY);
-        Response<ExchangeRate> response = request.execute();
+        TestObserver<ExchangeRate> observer = currencyService
+                .getExchangeRate(BuildConfig.CURRENCY_KEY).test();
+        ExchangeRate exchangeRate = observer.values().get(0);
 
         // Then
-        assert response.body() != null;
-        assertEquals(200, response.code());
-        assertEquals(false, response.body().isSuccess());
-        assertNotNull(response.body().getError());
+        observer.assertNoErrors();
+        assert exchangeRate != null;
+        assertEquals(false, exchangeRate.isSuccess());
+        assertNotNull(exchangeRate.getError());
     }
 
     @Test
@@ -83,11 +84,11 @@ public class CurrencyServiceTest {
         mockWebServerRule.enqueueThrottleResponse(body, 1);
 
         // When
-        Call<ExchangeRate> request = currencyService.getExchangeRate(BuildConfig.CURRENCY_KEY);
+        TestObserver<ExchangeRate> observer = currencyService
+                .getExchangeRate(BuildConfig.CURRENCY_KEY).test();
 
         // Then
-        exception.expect(SocketTimeoutException.class);
-        request.execute();
+        observer.assertFailure(SocketTimeoutException.class);
     }
 
     private String getBodyFromFile(String file) throws IOException {

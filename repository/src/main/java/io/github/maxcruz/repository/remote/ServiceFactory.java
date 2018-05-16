@@ -1,5 +1,7 @@
 package io.github.maxcruz.repository.remote;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -26,7 +28,7 @@ public class ServiceFactory {
      *
      * @return class instance
      */
-    public ServiceFactory withDebugBodyLogger(boolean debug) {
+    ServiceFactory withDebugBodyLogger(boolean debug) {
         if (debug) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addInterceptor(loggingInterceptor);
@@ -40,7 +42,7 @@ public class ServiceFactory {
      * @param seconds time to delay the request
      * @return class instance
      */
-    public ServiceFactory withTimeOut(int seconds) {
+    ServiceFactory withTimeOut(int seconds) {
         httpClientBuilder.connectTimeout(seconds, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(seconds, TimeUnit.SECONDS);
         return this;
@@ -54,10 +56,11 @@ public class ServiceFactory {
      * @param url Base URL for the rest API.
      * @return An implementation of the given Rest API interface.
      */
-    public <T> T createService(Class<T> clazz, String url) {
+    <T> T createService(Class<T> clazz, String url) {
         // Create a Retrofit instance using the provided builder
         Retrofit retrofit = (new Retrofit.Builder())
                 .baseUrl(url)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClientBuilder.build())
                 .build();

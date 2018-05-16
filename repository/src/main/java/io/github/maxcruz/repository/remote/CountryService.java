@@ -3,7 +3,7 @@ package io.github.maxcruz.repository.remote;
 import java.util.List;
 
 import io.github.maxcruz.repository.remote.dto.Country;
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -16,5 +16,5 @@ public interface CountryService {
     String URL = "https://restcountries.eu/rest/v2/";
 
     @GET("currency/{code}")
-    public Call<List<Country>> getCountry(@Path("code") String code);
+    Observable<List<Country>> getCountry(@Path("code") String code);
 }
