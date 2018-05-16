@@ -3,22 +3,20 @@ package io.github.maxcruz.repository.remote;
 import io.github.maxcruz.repository.remote.dto.ExchangeRate;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 /**
  * CurrencyLayer API mapping
- * https://currencylayer.com/documentation
+ * https://github.com/fixerAPI/fixer#readme
  */
 public interface CurrencyService {
 
-    String URL = "http://www.apilayer.net/api/";
+    String URL = "http://api.fixer.io/";
 
     /**
      * Get specified currency pairs with their respective exchange rate values.
      *
-     * @param accessKey A unique "password" provided to access any of the API's data endpoints.
-     * @return Exchange rates if the request if successfully, otherwise an error is returned.
+     * @return Exchange rates if the request if successfully.
      */
-    @GET("live")
-    Observable<ExchangeRate> getExchangeRate(@Query("access_key") String accessKey);
+    @GET("latest?base=USD")
+    Observable<ExchangeRate> getExchangeRate();
 }
