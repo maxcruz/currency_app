@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import io.github.maxcruz.repository.local.entity.ConversionRate;
+import io.github.maxcruz.repository.local.entity.ConversionRateTable;
 
 /**
  * Data access object for conversion rates.
@@ -16,32 +16,24 @@ import io.github.maxcruz.repository.local.entity.ConversionRate;
 public interface ConversionRateDao {
 
     /**
-     * @param base ISO code base.
-     * @return a list of conversion rates for the given base.
+     * @return a list of conversion rates.
      */
-    @Query("SELECT * FROM conversion_rate WHERE base = :base")
-    List<ConversionRate> getAllByBase(String base);
+    @Query("SELECT * FROM conversion_rate")
+    List<ConversionRateTable> getAll();
 
     /**
      * @param code ISO code.
      * @return a conversion rates for the given code.
      */
     @Query("SELECT * FROM conversion_rate WHERE code = :code LIMIT 1")
-    ConversionRate getByCode(String code);
+    ConversionRateTable getByCode(String code);
 
     /**
      * @param id ISO code.
      * @return a conversion rates for the given code.
      */
     @Query("SELECT * FROM conversion_rate WHERE uid = :id LIMIT 1")
-    ConversionRate getById(int id);
-
-    /**
-     * @param base ISO code base.
-     * @return number of rates for the base
-     */
-    @Query("SELECT COUNT(*) from conversion_rate WHERE base = :base")
-    int countRatesByBase(String base);
+    ConversionRateTable getById(int id);
 
     /**
      * @return number of rates
@@ -61,7 +53,7 @@ public interface ConversionRateDao {
      * @param rates rates to save.
      */
     @Insert
-    void insertAll(ConversionRate... rates);
+    void insertAll(ConversionRateTable... rates);
 
     /**
      * Delete the database rate.
@@ -69,5 +61,5 @@ public interface ConversionRateDao {
      * @param rate Object to remove.
      */
     @Delete
-    void delete(ConversionRate rate);
+    void delete(ConversionRateTable rate);
 }

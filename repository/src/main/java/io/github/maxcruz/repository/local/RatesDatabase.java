@@ -6,9 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
-import io.github.maxcruz.repository.local.entity.ConversionRate;
+import io.github.maxcruz.repository.local.entity.ConversionRateTable;
 
-@Database(entities = {ConversionRate.class}, version = 1)
+/**
+ * Data base to store currency rates
+ */
+@Database(entities = {ConversionRateTable.class}, version = 1)
 public abstract class RatesDatabase extends RoomDatabase {
 
     public abstract ConversionRateDao getConversionRateDao();
@@ -16,8 +19,15 @@ public abstract class RatesDatabase extends RoomDatabase {
     private static RatesDatabase INSTANCE;
 
     @VisibleForTesting
-    public static final String DATABASE_NAME = "rates-database";
+    private static final String DATABASE_NAME = "rates-database";
 
+    /**
+     * Return a single instance of the database
+     *
+     * @param context No matter which kind of Context is provided, to avoid memory leaks
+     *                the Application Context is used.
+     * @return Database instance to access or save currency rates.
+     */
     public static RatesDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (RatesDatabase.class) {
