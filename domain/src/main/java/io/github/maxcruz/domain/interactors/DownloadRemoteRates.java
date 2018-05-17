@@ -11,7 +11,7 @@ public class DownloadRemoteRates extends UseCase<Void> {
 
     private Repository repository;
 
-    DownloadRemoteRates(Repository repository, Scheduler subscribeOn, Scheduler observeOn) {
+    public DownloadRemoteRates(Repository repository, Scheduler subscribeOn, Scheduler observeOn) {
         super(subscribeOn, observeOn);
         this.repository = repository;
     }

@@ -33,7 +33,9 @@ public abstract class RatesDatabase extends RoomDatabase {
             synchronized (RatesDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            RatesDatabase.class, DATABASE_NAME).build();
+                            RatesDatabase.class, DATABASE_NAME)
+                            .allowMainThreadQueries()
+                            .build();
                 }
             }
         }

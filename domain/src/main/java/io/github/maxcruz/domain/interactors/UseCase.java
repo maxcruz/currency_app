@@ -29,7 +29,7 @@ public abstract class UseCase<T> {
     /**
      * Method to execute the use case in a different thread
      */
-    Observable<T> execute() {
+    public Observable<T> execute() {
         return this.buildUseCaseObservable().subscribeOn(subscribeOn).observeOn(observeOn);
     }
 }

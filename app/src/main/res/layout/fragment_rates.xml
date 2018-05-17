@@ -62,12 +62,12 @@
         android:id="@+id/outputRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/margin"
         android:focusable="true"
         auto:layout_constraintBottom_toBottomOf="parent"
         auto:layout_constraintLeft_toLeftOf="parent"
         auto:layout_constraintRight_toRightOf="parent"
-        auto:layout_constraintTop_toBottomOf="@id/inputLayout">
+        auto:layout_constraintTop_toBottomOf="@id/inputLayout"
+        tools:listitem="@layout/item_currency">
 
     </android.support.v7.widget.RecyclerView>
 

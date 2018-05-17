@@ -12,7 +12,7 @@ public class GetSavedRates extends UseCase<ConversionRate> {
 
     private Repository repository;
 
-    GetSavedRates(Repository repository, Scheduler subscribeOn, Scheduler observeOn) {
+    public GetSavedRates(Repository repository, Scheduler subscribeOn, Scheduler observeOn) {
         super(subscribeOn, observeOn);
         this.repository = repository;
     }
