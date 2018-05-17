@@ -1,13 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".rates.RatesFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        auto:layout_constraintLeft_toLeftOf="parent"
+        auto:layout_constraintRight_toRightOf="parent"
+        auto:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imageViewFlag"
+            android:layout_width="@dimen/size_flag"
+            android:layout_height="@dimen/size_flag"
+            android:layout_margin="@dimen/margin"
+            android:contentDescription="@string/currency_usd"
+            android:src="@drawable/usd" />
+
+        <TextView
+            android:id="@+id/textViewCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/currency_usd"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_big"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="@string/input_hint"
+            android:hint="@string/input_hint"
+            android:inputType="numberDecimal"
+            android:textAlignment="textEnd"
+            android:textSize="@dimen/font_big"
+            tools:targetApi="o" />
+
+        <ImageButton
+            android:id="@+id/imageButtonClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/label_clear"
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/colorSecondaryText" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/outputRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin"
+        android:focusable="true"
+        auto:layout_constraintBottom_toBottomOf="parent"
+        auto:layout_constraintLeft_toLeftOf="parent"
+        auto:layout_constraintRight_toRightOf="parent"
+        auto:layout_constraintTop_toBottomOf="@id/inputLayout">
+
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.constraint.ConstraintLayout>
