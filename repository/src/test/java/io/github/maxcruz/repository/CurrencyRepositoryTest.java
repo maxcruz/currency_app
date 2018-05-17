@@ -75,11 +75,10 @@ public class CurrencyRepositoryTest {
     @Test
     public void addLocalRates() {
         // Given
-        List<ConversionRate> list = new ArrayList<>();
-        list.add(new ConversionRate("AUD", 1.3344));
+        ConversionRate rate = new ConversionRate("AUD", 1.3344);
 
         // When
-        TestObserver<Void> observer = repository.saveLocalRates(list).test();
+        TestObserver<Void> observer = repository.saveLocalRate(rate).test();
 
         // Then
         observer.assertComplete();

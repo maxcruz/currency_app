@@ -1,9 +1,7 @@
 package io.github.maxcruz.repository;
 
-import java.util.List;
-
 import io.github.maxcruz.domain.model.ConversionRate;
-import io.github.maxcruz.domain.repository.CurrencyData;
+import io.github.maxcruz.domain.repository.Repository;
 import io.github.maxcruz.repository.local.ConversionRateDao;
 import io.github.maxcruz.repository.local.entity.ConversionRateTable;
 import io.github.maxcruz.repository.remote.CurrencyService;
@@ -13,7 +11,7 @@ import io.reactivex.Observable;
 /**
  * Repository pattern implementation to access local and remote data
  */
-public class CurrencyRepository implements CurrencyData {
+public class CurrencyRepository implements Repository {
 
     private ConversionRateDao conversionRateDao;
     private CurrencyService currencyService;
@@ -30,18 +28,16 @@ public class CurrencyRepository implements CurrencyData {
     }
 
     @Override
-    public Completable saveLocalRates(List<ConversionRate> rates) {
+    public Completable saveLocalRate(ConversionRate rate) {
         return Completable.fromAction(() -> {
-            for (ConversionRate rate : rates) {
-                ConversionRateTable previous = conversionRateDao.getByCode(rate.getCode());
-                if (previous != null) {
-                    conversionRateDao.delete(previous);
-                }
-                ConversionRateTable entry = new ConversionRateTable();
-                entry.setCode(rate.getCode());
-                entry.setRate(rate.getRate());
-                conversionRateDao.insertAll(entry);
+            ConversionRateTable previous = conversionRateDao.getByCode(rate.getCode());
+            if (previous != null) {
+                conversionRateDao.delete(previous);
             }
+            ConversionRateTable entry = new ConversionRateTable();
+            entry.setCode(rate.getCode());
+            entry.setRate(rate.getRate());
+            conversionRateDao.insertAll(entry);
         });
     }
 
