@@ -6,13 +6,13 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 
 ## Pantallas
 
-Entorno de desarrollo
+## Entorno de desarrollo
 • Android Studio 3.2
 • Gradle 4.6
 
-##Arquitectura y librerías
+## Arquitectura y librerías
 
-###Presentación
+### Presentación
 
 * MVVM, para organizar la capa de presentación y mantenr el estado
 * Lottie, una libreía de Airbnb para utilizar animaciones en la aplicaicón
