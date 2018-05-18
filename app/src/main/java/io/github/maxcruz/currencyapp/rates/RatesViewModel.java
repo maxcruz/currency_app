@@ -23,10 +23,11 @@ public class RatesViewModel extends ViewModel {
     private final MutableLiveData<List<ConversionRate>> rates = new MutableLiveData<>();
     private final MutableLiveData<Status> status = new MutableLiveData<>();
 
-    RatesViewModel(DownloadRemoteRates downloadRemoteRates, GetSavedRates getSavedRates) {
+    RatesViewModel(DownloadRemoteRates downloadRemoteRates, GetSavedRates getSavedRates,
+                   CompositeDisposable compositeDisposable) {
         this.downloadRemoteRates = downloadRemoteRates;
         this.getSavedRates = getSavedRates;
-        this.compositeDisposable = new CompositeDisposable();
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override

@@ -48,7 +48,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.18.3'
     testImplementation 'org.mockito:mockito-inline:2.18.3'
-    testImplementation 'org.robolectric:robolectric:3.8'
 
     // Integration test
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

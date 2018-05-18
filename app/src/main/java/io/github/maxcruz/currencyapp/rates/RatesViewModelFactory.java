@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * As our ViewModel requires customs parameters it is necessary a custom provider.
@@ -26,7 +27,8 @@ public class RatesViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(RatesViewModel.class)) {
-            return (T) new RatesViewModel(downloadRemoteRates, getSavedRates);
+            CompositeDisposable disposables = new CompositeDisposable();
+            return (T) new RatesViewModel(downloadRemoteRates, getSavedRates, disposables);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

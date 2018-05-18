@@ -49,6 +49,7 @@ public class CurrencyRepositoryTest {
 
         // When
         TestObserver<ConversionRate> observer = repository.retrieveLocalRates().test();
+        repository.retrieveLocalRates().subscribe();
 
         // Then
         observer.assertNoErrors();
@@ -66,6 +67,8 @@ public class CurrencyRepositoryTest {
 
         // When
         TestObserver<ConversionRate> observer = repository.retrieveLocalRates().test();
+        repository.retrieveLocalRates().subscribe();
+
 
         // Then
         observer.assertNoErrors();
