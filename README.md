@@ -6,6 +6,10 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 
 ## Pantallas
 
+### Mockups
+
+### Screenshots
+
 ## Entorno de desarrollo
 • Android Studio 3.2
 • Gradle 4.6
