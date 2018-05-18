@@ -5,14 +5,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -36,12 +38,18 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class RatesFragment extends Fragment {
+public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     protected RatesViewModelFactory viewModelFactory;
 
     private RatesViewModel viewModel;
     private RatesAdapter ratesAdapter;
+
+    @BindView(R.id.constraintLayout)
+    ConstraintLayout layout;
+
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.outputRecyclerView)
     protected RecyclerView outputRecyclerView;
@@ -68,6 +76,7 @@ public class RatesFragment extends Fragment {
         outputRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ratesAdapter = new RatesAdapter(new ArrayList<>());
         outputRecyclerView.setAdapter(ratesAdapter);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -94,13 +103,14 @@ public class RatesFragment extends Fragment {
     private void processResponse(RatesViewModel.Status status) {
         switch (status) {
             case LOADING:
-                Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
+                swipeRefreshLayout.setRefreshing(true);
                 break;
             case SUCCESS:
-                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_LONG).show();
+                swipeRefreshLayout.setRefreshing(false);
                 break;
             case ERROR:
-                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_LONG).show();
+                swipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(layout, R.string.message_network_error, Snackbar.LENGTH_LONG).show();
                 break;
             case COMPLETE:
                 viewModel.loadConversionRates();
@@ -122,4 +132,10 @@ public class RatesFragment extends Fragment {
         viewModelFactory = new RatesViewModelFactory(downloadRemoteRates, getSavedRates);
     }
 
+    @Override
+    public void onRefresh() {
+        onClearInput();
+        ratesAdapter.addItems(new ArrayList<>());
+        viewModel.synchronize();
+    }
 }

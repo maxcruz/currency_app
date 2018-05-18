@@ -1,5 +1,6 @@
 package io.github.maxcruz.currencyapp.rates.list;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,9 +38,13 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ConversionRate conversionRate = rates.get(position);
+        String code = conversionRate.getCode();
         Double value = conversionRate.getRate() * input;
-        holder.textViewCode.setText(conversionRate.getCode());
+        holder.textViewCode.setText(code);
         holder.textViewValue.setText(format.format(value));
+        Context context = holder.imageViewFlag.getContext();
+        int flag = getFlagDrawable(context, code.toLowerCase());
+        holder.imageViewFlag.setImageResource(flag);
     }
 
     @Override
@@ -53,8 +58,14 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> 
     }
 
     public void addItems(List<ConversionRate> list) {
+        rates.clear();
         rates.addAll(list);
         notifyDataSetChanged();
+    }
+
+    private int getFlagDrawable(Context context, String code) {
+        return context.getResources()
+                .getIdentifier("flag_" + code, "drawable", context.getPackageName());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".rates.RatesFragment">
@@ -23,7 +24,7 @@
             android:layout_height="@dimen/size_flag"
             android:layout_margin="@dimen/margin"
             android:contentDescription="@string/currency_usd"
-            android:src="@drawable/usd" />
+            android:src="@drawable/flag_usd" />
 
         <TextView
             android:id="@+id/textViewCode"
@@ -59,17 +60,21 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/outputRecyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:focusable="true"
         auto:layout_constraintBottom_toBottomOf="parent"
         auto:layout_constraintLeft_toLeftOf="parent"
         auto:layout_constraintRight_toRightOf="parent"
-        auto:layout_constraintTop_toBottomOf="@id/inputLayout"
-        tools:listitem="@layout/item_currency">
+        auto:layout_constraintTop_toBottomOf="@id/inputLayout">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/outputRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_currency" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
