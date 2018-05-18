@@ -20,20 +20,20 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 
 ### Presentación
 
-* MVVM, para organizar la capa de presentación y mantenr el estado
-* Lottie, una libreía de Airbnb para utilizar animaciones en la aplicaicón
+* MVVM, para organizar la capa de presentación y mantener el estado de los ViewModel (modulo app)
+* Lottie, una libreía de Airbnb para utilizar animaciones (splash screen)
 * ButterKnife, para vincular los layout XML con las actividades
 * ConstraintLayouts, para el diseño de los layouts
 * JetPack Navigator, para la navegación. Presentado por Google en el IO de 2018 que viene siendo algo similar a los Storyboards de iOS.
 
 ### Capas
-* RxJava, para comunicar las diferentes capas de la aplicación
-* Dagger2, para mantener el principio de inversión de dependencias a lo largo de la aplicaión.
-* Clean, los casos de uso se abstraen en interactuadores que no dependen de Android
-* Lifecycle Aware Components, presentado en la IO de 2017 dentro de los componentes de arquitectura de Google. Se usan ViewModel, LiveData y Lifecycle Observers
+* RxJava, para comunicar las diferentes capas de la aplicación (app, domain, repository) 
+* Dagger2, para mantener el principio de inversión de dependencias.
+* Clean, los casos de uso se abstraen en interactuadores que no dependen de Android (modulo domain)
+* Lifecycle Aware Components, presentado en la IO de 2017 dentro de los componentes de arquitectura de Google. Se usan ViewModel, LiveData y Lifecycle Observers (modulo app)
 
 ### Datos
-* Repository, el acceso a datos se abstrae y se maneja en una capa aparte
+* Repository, el acceso a datos se abstrae y se maneja en una capa aparte (modulo repository)
 * Room como motor de persistencia (también presentado en la IO de 2017)
 * Estrategia de Off-Line, primero consume el servicio remoto y luego va al caché local
 * Retrofit (RxJava adapter, Gson), para la comunicaión con el servicio web
