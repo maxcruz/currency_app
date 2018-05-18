@@ -34,7 +34,6 @@ public abstract class RatesDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RatesDatabase.class, DATABASE_NAME)
-                            .allowMainThreadQueries()
                             .build();
                 }
             }

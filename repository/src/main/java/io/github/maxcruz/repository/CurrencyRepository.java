@@ -7,6 +7,7 @@ import io.github.maxcruz.repository.local.entity.ConversionRateTable;
 import io.github.maxcruz.repository.remote.CurrencyService;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Repository pattern implementation to access local and remote data
@@ -23,8 +24,9 @@ public class CurrencyRepository implements Repository {
 
     @Override
     public Observable<ConversionRate> retrieveLocalRates() {
-        return Observable.fromIterable(conversionRateDao.getAll()).map(tableEntry ->
-                new ConversionRate(tableEntry.getCode(), tableEntry.getRate()));
+        return Observable.defer(() -> Observable.fromIterable(conversionRateDao.getAll()))
+                .subscribeOn(Schedulers.io())
+                .map(tableEntry -> new ConversionRate(tableEntry.getCode(), tableEntry.getRate()));
     }
 
     @Override

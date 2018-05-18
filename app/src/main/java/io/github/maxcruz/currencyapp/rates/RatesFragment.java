@@ -18,30 +18,22 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import io.github.maxcruz.currencyapp.CurrencyApp;
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.currencyapp.rates.list.RatesAdapter;
-import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
-import io.github.maxcruz.domain.interactors.GetSavedRates;
-import io.github.maxcruz.domain.repository.Repository;
-import io.github.maxcruz.repository.CurrencyRepository;
-import io.github.maxcruz.repository.local.ConversionRateDao;
-import io.github.maxcruz.repository.local.RatesDatabase;
-import io.github.maxcruz.repository.remote.CurrencyService;
-import io.github.maxcruz.repository.remote.ServiceFactory;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    @Inject
     protected RatesViewModelFactory viewModelFactory;
 
+    private Context context;
     private RatesViewModel viewModel;
     private RatesAdapter ratesAdapter;
 
@@ -60,6 +52,7 @@ public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         setupInjection();
     }
 
@@ -73,7 +66,7 @@ public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void setupRecyclerView() {
-        outputRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        outputRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         ratesAdapter = new RatesAdapter(new ArrayList<>());
         outputRecyclerView.setAdapter(ratesAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -119,17 +112,8 @@ public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void setupInjection() {
-        // TODO: Setup dependency injection
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        CurrencyService currencyService = new ServiceFactory(builder, interceptor).createService(CurrencyService.class, CurrencyService.URL);
-        ConversionRateDao conversionRateDao = RatesDatabase.getDatabase(getContext()).getConversionRateDao();
-        Repository repository = new CurrencyRepository(conversionRateDao, currencyService);
-        Scheduler subscribeOn = Schedulers.io();
-        Scheduler observeOn = AndroidSchedulers.mainThread();
-        DownloadRemoteRates downloadRemoteRates = new DownloadRemoteRates(repository, subscribeOn, observeOn);
-        GetSavedRates getSavedRates = new GetSavedRates(repository, subscribeOn, observeOn);
-        viewModelFactory = new RatesViewModelFactory(downloadRemoteRates, getSavedRates);
+        ((CurrencyApp) context.getApplicationContext())
+                .getRatesComponent(context).inject(this);
     }
 
     @Override

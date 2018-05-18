@@ -7,12 +7,12 @@ import android.support.annotation.NonNull;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
 
-class RatesViewModelFactory implements ViewModelProvider.Factory {
+public class RatesViewModelFactory implements ViewModelProvider.Factory {
 
     private final DownloadRemoteRates downloadRemoteRates;
     private final GetSavedRates getSavedRates;
 
-    RatesViewModelFactory(DownloadRemoteRates downloadRemoteRates,
+    public RatesViewModelFactory(DownloadRemoteRates downloadRemoteRates,
                           GetSavedRates getSavedRates) {
         this.downloadRemoteRates = downloadRemoteRates;
         this.getSavedRates = getSavedRates;

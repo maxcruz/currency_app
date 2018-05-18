@@ -13,3 +13,6 @@ Dagger2
 ConstraintLayouts
 Lottie
 JetPack Navigator
+LiveData
+ButterKnife
+Delegate Adapters

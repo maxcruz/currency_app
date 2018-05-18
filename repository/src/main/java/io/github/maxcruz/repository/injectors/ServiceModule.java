@@ -18,20 +18,20 @@ public class ServiceModule {
 
     @Provides
     @Singleton
-    public OkHttpClient.Builder providesHttpClientBuilder() {
+    OkHttpClient.Builder providesHttpClientBuilder() {
         return new OkHttpClient.Builder();
     }
 
     @Provides
     @Singleton
-    public HttpLoggingInterceptor providesHttpLoggingInterceptor() {
+    HttpLoggingInterceptor providesHttpLoggingInterceptor() {
         return new HttpLoggingInterceptor();
     }
 
     @Provides
     @Singleton
-    public ServiceFactory providesServiceFactory(OkHttpClient.Builder builder,
-                                                 HttpLoggingInterceptor interceptor) {
+    ServiceFactory providesServiceFactory(OkHttpClient.Builder builder,
+                                          HttpLoggingInterceptor interceptor) {
         ServiceFactory serviceFactory = new ServiceFactory(builder, interceptor);
         serviceFactory.withDebugBodyLogger(BuildConfig.DEBUG);
         return serviceFactory;
@@ -39,7 +39,7 @@ public class ServiceModule {
 
     @Provides
     @Singleton
-    public CurrencyService providesCurrencyService(ServiceFactory serviceFactory) {
+    CurrencyService providesCurrencyService(ServiceFactory serviceFactory) {
         return serviceFactory.createService(CurrencyService.class, CurrencyService.URL);
     }
 }

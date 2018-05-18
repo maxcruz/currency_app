@@ -23,13 +23,13 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
-    public RatesDatabase providesRatesDatabase() {
+    RatesDatabase providesRatesDatabase() {
         return RatesDatabase.getDatabase(context);
     }
 
     @Provides
     @Singleton
-    public ConversionRateDao providesConversionRateDao(RatesDatabase database) {
+    ConversionRateDao providesConversionRateDao(RatesDatabase database) {
         return database.getConversionRateDao();
     }
 }

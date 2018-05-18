@@ -17,8 +17,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public Repository providesCurrencyData(ConversionRateDao conversionRateDao,
-                                           CurrencyService currencyService) {
+    Repository providesCurrencyData(ConversionRateDao conversionRateDao,
+                                    CurrencyService currencyService) {
         return new CurrencyRepository(conversionRateDao, currencyService);
     }
 }
