@@ -46,10 +46,10 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 
 ## Pendientes
 
-• Migrar el API al nuevo servicio de Fixer
+* Migrar el API al nuevo servicio de Fixer
 * Más pruebas en todas las capas pero principalmente en la de UI
-• Sería genial poder cambiar la moneda base
-• Modificar el orden de las monedas (o seleccionar unas favoritas)
+* Sería genial poder cambiar la moneda base
+* Modificar el orden de las monedas (o seleccionar unas favoritas)
 * Incluir otras fuentes (criptomonedas por ejemplo)
 
 ## Licencia
