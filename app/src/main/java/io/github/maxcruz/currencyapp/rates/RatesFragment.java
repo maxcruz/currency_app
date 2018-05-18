@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.maxcruz.currencyapp.R;
+import io.github.maxcruz.currencyapp.rates.list.RatesAdapter;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
 import io.github.maxcruz.domain.repository.Repository;
@@ -30,7 +36,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class RatesFragment extends Fragment {
 
     protected RatesViewModelFactory viewModelFactory;
+
     private RatesViewModel viewModel;
+    private RatesAdapter ratesAdapter;
+
+    @BindView(R.id.outputRecyclerView)
+    protected RecyclerView outputRecyclerView;
 
     @Override
     public void onAttach(Context context) {
@@ -43,7 +54,14 @@ public class RatesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rates, container, false);
         ButterKnife.bind(this, view);
+        setupRecyclerView();
         return view;
+    }
+
+    private void setupRecyclerView() {
+        outputRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ratesAdapter = new RatesAdapter(new ArrayList<>());
+        outputRecyclerView.setAdapter(ratesAdapter);
     }
 
     @Override
@@ -51,7 +69,10 @@ public class RatesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RatesViewModel.class);
         viewModel.getStatus().observe(this, this::processResponse);
-        viewModel.getRates().observe(this, System.out::println);
+        viewModel.getRates().observe(this, list -> {
+            ratesAdapter.getRates().addAll(list);
+            ratesAdapter.notifyDataSetChanged();
+        });
         viewModel.synchronize();
     }
 
