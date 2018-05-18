@@ -1,6 +1,5 @@
 package io.github.maxcruz.currencyapp.rates;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -9,8 +8,8 @@ import java.util.List;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
 import io.github.maxcruz.domain.model.ConversionRate;
+import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 public class RatesViewModel extends ViewModel {
 
@@ -18,8 +17,8 @@ public class RatesViewModel extends ViewModel {
     private DownloadRemoteRates downloadRemoteRates;
     private GetSavedRates getSavedRates;
 
-    private LiveData<List<ConversionRate>> conversionRates;
-
+    private final MutableLiveData<List<ConversionRate>> rates = new MutableLiveData<>();
+    private final MutableLiveData<Status> status = new MutableLiveData<>();
 
     RatesViewModel(DownloadRemoteRates downloadRemoteRates, GetSavedRates getSavedRates) {
         this.downloadRemoteRates = downloadRemoteRates;
@@ -32,22 +31,30 @@ public class RatesViewModel extends ViewModel {
         compositeDisposable.clear();
     }
 
-    public void synchronize() {
-        downloadRemoteRates.execute().subscribe();
+    void synchronize() {
+        compositeDisposable.add(Completable.fromObservable(downloadRemoteRates.execute())
+                .doOnSubscribe(disposable -> status.setValue(Status.LOADING))
+                .doFinally(() -> status.setValue(Status.COMPLETE))
+                .subscribe(() -> status.setValue(Status.SUCCESS),
+                        error -> status.setValue(Status.ERROR)));
     }
 
-    private void loadConversionRates() {
-        Disposable disposable = getSavedRates.execute().subscribe(
-                conversionRate -> conversionRates.getValue().add(conversionRate),
-                throwable -> throwable.printStackTrace());
-        compositeDisposable.add(disposable);
+    void loadConversionRates() {
+        compositeDisposable.add(getSavedRates.execute().toList().subscribe(rates::postValue));
     }
 
-    public LiveData<List<ConversionRate>> getConversionRates() {
-        if (conversionRates == null) {
-            conversionRates = new MutableLiveData<>();
-            loadConversionRates();
-        }
-        return conversionRates;
+    MutableLiveData<List<ConversionRate>> getRates() {
+        return rates;
+    }
+
+    MutableLiveData<Status> getStatus() {
+        return status;
+    }
+
+    public enum Status {
+        LOADING,
+        SUCCESS,
+        ERROR,
+        COMPLETE
     }
 }

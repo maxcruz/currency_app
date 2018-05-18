@@ -1,5 +1,6 @@
 package io.github.maxcruz.currencyapp.rates;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
@@ -26,6 +28,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RatesFragment extends Fragment {
 
+    protected RatesViewModelFactory viewModelFactory;
+    private RatesViewModel viewModel;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -36,6 +41,32 @@ public class RatesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_rates, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RatesViewModel.class);
+        viewModel.getStatus().observe(this, this::processResponse);
+        viewModel.getRates().observe(this, System.out::println);
+        viewModel.synchronize();
+    }
+
+    private void processResponse(RatesViewModel.Status status) {
+        switch (status) {
+            case LOADING:
+                Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
+                break;
+            case SUCCESS:
+                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_LONG).show();
+                break;
+            case ERROR:
+                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_LONG).show();
+                break;
+            case COMPLETE:
+                viewModel.loadConversionRates();
+                break;
+        }
     }
 
     private void setupInjection() {
@@ -49,6 +80,7 @@ public class RatesFragment extends Fragment {
         Scheduler observeOn = AndroidSchedulers.mainThread();
         DownloadRemoteRates downloadRemoteRates = new DownloadRemoteRates(repository, subscribeOn, observeOn);
         GetSavedRates getSavedRates = new GetSavedRates(repository, subscribeOn, observeOn);
+        viewModelFactory = new RatesViewModelFactory(downloadRemoteRates, getSavedRates);
     }
 
 }
