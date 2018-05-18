@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
@@ -40,7 +41,9 @@ public class RatesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_rates, container, false);
+        View view = inflater.inflate(R.layout.fragment_rates, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override

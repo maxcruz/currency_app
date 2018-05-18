@@ -13,11 +13,16 @@ import android.view.ViewGroup;
 import com.airbnb.lottie.LottieAnimationView;
 
 import androidx.navigation.Navigation;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.maxcruz.currencyapp.R;
 
 public class SplashFragment extends Fragment {
 
     private AppCompatActivity activity;
+
+    @BindView(R.id.animationView)
+    protected LottieAnimationView animationView;
 
     @Override
     public void onAttach(Context context) {
@@ -29,7 +34,8 @@ public class SplashFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
-        controlSplashAnimation((LottieAnimationView) view.findViewById(R.id.animationView));
+        ButterKnife.bind(this, view);
+        controlSplashAnimation(animationView);
         return view;
     }
 
@@ -58,8 +64,8 @@ public class SplashFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Navigation.findNavController(animationView)
-                        .navigate(R.id.action_splashFragment_to_ratesFragment);
+                int navigation = R.id.action_splashFragment_to_ratesFragment;
+                Navigation.findNavController(animationView).navigate(navigation);
             }
         });
     }
