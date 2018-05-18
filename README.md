@@ -7,8 +7,10 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 ## Pantallas
 
 ### Mockups
-
+![](https://github.com/maxcruz/currency_app/blob/master/screens/mockup.jpg?raw=true)
 ### Screenshots
+![](https://github.com/maxcruz/currency_app/blob/master/screens/screen-splash.png?raw=true)
+![](https://github.com/maxcruz/currency_app/blob/master/screens/screen-rates.png?raw=true)
 
 ## Entorno de desarrollo
 • Android Studio 3.2
