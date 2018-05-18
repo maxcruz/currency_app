@@ -11,12 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.currencyapp.rates.list.RatesAdapter;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
@@ -42,6 +45,9 @@ public class RatesFragment extends Fragment {
 
     @BindView(R.id.outputRecyclerView)
     protected RecyclerView outputRecyclerView;
+
+    @BindView(R.id.editTextInput)
+    protected EditText editTextInput;
 
     @Override
     public void onAttach(Context context) {
@@ -69,11 +75,20 @@ public class RatesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RatesViewModel.class);
         viewModel.getStatus().observe(this, this::processResponse);
-        viewModel.getRates().observe(this, list -> {
-            ratesAdapter.getRates().addAll(list);
-            ratesAdapter.notifyDataSetChanged();
-        });
+        viewModel.getRates().observe(this, list -> ratesAdapter.addItems(list));
         viewModel.synchronize();
+    }
+
+    @OnClick(R.id.imageButtonClear)
+    protected void onClearInput() {
+        editTextInput.setText("");
+    }
+
+    @OnTextChanged(R.id.editTextInput)
+    protected void onInputChanged() {
+        String inputText = editTextInput.getText().toString();
+        Double input = (! inputText.isEmpty()) ? Double.parseDouble(inputText) : 0.0;
+        ratesAdapter.setInput(input);
     }
 
     private void processResponse(RatesViewModel.Status status) {

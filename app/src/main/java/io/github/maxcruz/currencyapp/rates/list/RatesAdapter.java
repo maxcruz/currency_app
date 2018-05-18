@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,7 +18,9 @@ import io.github.maxcruz.domain.model.ConversionRate;
 
 public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> {
 
+    private NumberFormat format = NumberFormat.getCurrencyInstance();
     private final List<ConversionRate> rates;
+    private double input;
 
     public RatesAdapter(List<ConversionRate> rates) {
         this.rates = rates;
@@ -34,7 +37,9 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ConversionRate conversionRate = rates.get(position);
+        Double value = conversionRate.getRate() * input;
         holder.textViewCode.setText(conversionRate.getCode());
+        holder.textViewValue.setText(format.format(value));
     }
 
     @Override
@@ -42,8 +47,14 @@ public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> 
         return this.rates.size();
     }
 
-    public List<ConversionRate> getRates() {
-        return rates;
+    public void setInput(double input) {
+        this.input = input;
+        notifyDataSetChanged();
+    }
+
+    public void addItems(List<ConversionRate> list) {
+        rates.addAll(list);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
