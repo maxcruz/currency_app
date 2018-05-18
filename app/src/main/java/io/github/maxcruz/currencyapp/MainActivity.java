@@ -3,6 +3,9 @@ package io.github.maxcruz.currencyapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * Main activity that should hold fragments in JetPack Navigation Architecture.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

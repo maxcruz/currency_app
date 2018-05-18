@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.domain.model.ConversionRate;
 
+/**
+ * Adapter for the list of currencies with the converted value.
+ */
 public class RatesAdapter extends RecyclerView.Adapter<RatesAdapter.ViewHolder> {
 
     private NumberFormat format = NumberFormat.getCurrencyInstance();

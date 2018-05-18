@@ -11,6 +11,9 @@ import io.github.maxcruz.domain.model.ConversionRate;
 import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
 
+/**
+ * ViewModel for the rates feature.
+ */
 public class RatesViewModel extends ViewModel {
 
     private CompositeDisposable compositeDisposable;

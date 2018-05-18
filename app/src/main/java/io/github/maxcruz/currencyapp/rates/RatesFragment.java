@@ -28,6 +28,9 @@ import io.github.maxcruz.currencyapp.CurrencyApp;
 import io.github.maxcruz.currencyapp.R;
 import io.github.maxcruz.currencyapp.rates.list.RatesAdapter;
 
+/**
+ * Currencies with conversion rate screen.
+ */
 public class RatesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject

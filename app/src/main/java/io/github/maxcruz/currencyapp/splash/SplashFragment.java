@@ -17,6 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.maxcruz.currencyapp.R;
 
+/**
+ * Welcome screen that follow to the next fragment using the navigation when the animation ends.
+ */
 public class SplashFragment extends Fragment {
 
     private AppCompatActivity activity;

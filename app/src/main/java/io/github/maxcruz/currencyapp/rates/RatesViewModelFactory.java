@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import io.github.maxcruz.domain.interactors.DownloadRemoteRates;
 import io.github.maxcruz.domain.interactors.GetSavedRates;
 
+/**
+ * As our ViewModel requires customs parameters it is necessary a custom provider.
+ */
 public class RatesViewModelFactory implements ViewModelProvider.Factory {
 
     private final DownloadRemoteRates downloadRemoteRates;

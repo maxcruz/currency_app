@@ -10,6 +10,9 @@ import io.github.maxcruz.repository.injectors.DatabaseModule;
 import io.github.maxcruz.repository.injectors.RepositoryModule;
 import io.github.maxcruz.repository.injectors.ServiceModule;
 
+/**
+ * Application that return the component injection.
+ */
 public class CurrencyApp extends Application {
 
     public RatesComponent getRatesComponent(Context context) {
