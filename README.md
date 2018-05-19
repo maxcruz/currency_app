@@ -56,8 +56,7 @@ Esta es una aplicaión de ejemplo que hace conversión de dólares estadounidens
 ```
 The MIT License (MIT)
 
-Copyright (c) 2011-2018 Twitter, Inc.
-Copyright (c) 2011-2018 The Bootstrap Authors
+Copyright (c) 2018 Max Cruz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
